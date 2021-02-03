@@ -101,13 +101,13 @@ int readTemplateFile(const char *const ipFile, const char *const templateFile,
         version = atof(tempStr);
         if (version != 1.0)
         {
-            sprintf_s(errMsg, msgLen, "[err]Line 1(version): template file version %s is not supported.\n", tempStr);
+            snprintf(errMsg, msgLen, "[err]Line 1(version): template file version %s is not supported.\n", tempStr);
             return -1;
         }
     }
     else
     {
-        strcat_s(errMsg, msgLen, "[err]Line 1(version): You must specify the template file version on the first line.\n"
+        strncat(errMsg, msgLen, "[err]Line 1(version): You must specify the template file version on the first line.\n"
                                  "     example: DanmakuFactory_Template_Version: 1.0\n"
                 );
         return -1;
@@ -162,7 +162,7 @@ int readTemplateFile(const char *const ipFile, const char *const templateFile,
                 else
                 {
                     sprintf(tempMsgStr, "[err]Line %d(set): Unknown Words %s.\n", lineCnt, tempStr);
-                    strcat_s(errMsg, msgLen, tempMsgStr);
+                    strncat(errMsg, msgLen, tempMsgStr);
                     return -1;
                 }
                 strGetLeftPart(NULL, &linePtr, ':', LINE_MAX_LEN); /* 移动指针到冒号之后 */
@@ -260,7 +260,7 @@ int readTemplateFile(const char *const ipFile, const char *const templateFile,
                     else
                     {
                         sprintf(tempMsgStr, "[err]Line %d: Unknown Words %s.\n", lineCnt, tempStr);
-                        strcat_s(errMsg, msgLen, tempMsgStr);
+                        strncat(errMsg, msgLen, tempMsgStr);
                         return -1;
                     }
                     
@@ -315,14 +315,14 @@ int readTemplateFile(const char *const ipFile, const char *const templateFile,
                         else
                         {
                             sprintf(tempMsgStr, "[err]Line %d: Unknown Words %s.\n", lineCnt, tempStr);
-                            strcat_s(errMsg, msgLen, tempMsgStr);
+                            strncat(errMsg, msgLen, tempMsgStr);
                             return -1;
                         }
                     }
                     else
                     {
                         sprintf(tempMsgStr, "[err]Line %d: Unknown Words %s.\n", lineCnt, tempStr);
-                        strcat_s(errMsg, msgLen, tempMsgStr);
+                        strncat(errMsg, msgLen, tempMsgStr);
                         return -1;
                     }
                     break;
@@ -337,7 +337,7 @@ int readTemplateFile(const char *const ipFile, const char *const templateFile,
                     else
                     {
                         sprintf(tempMsgStr, "[err]Line %d: Unknown Words %s.\n", lineCnt, tempStr);
-                        strcat_s(errMsg, msgLen, tempMsgStr);
+                        strncat(errMsg, msgLen, tempMsgStr);
                         return -1;
                     }
                     break;
@@ -352,13 +352,13 @@ int readTemplateFile(const char *const ipFile, const char *const templateFile,
                     else
                     {
                         sprintf(tempMsgStr, "[err]Line %d: Unknown Words %s.\n", lineCnt, tempStr);
-                        strcat_s(errMsg, msgLen, tempMsgStr);
+                        strncat(errMsg, msgLen, tempMsgStr);
                         return -1;
                     }
                     break;
                 default:
                     sprintf(tempMsgStr, "[err]Line %d: Unknown Words %s.\n", lineCnt, tempStr);
-                    strcat_s(errMsg, msgLen, tempMsgStr);
+                    strncat(errMsg, msgLen, tempMsgStr);
                     return -1;
                     break;
                 }
@@ -427,14 +427,14 @@ int readTemplateFile(const char *const ipFile, const char *const templateFile,
         /* 格式字符串空检测 */
         if (format.formatTableLen < 2)
         {
-            strcat_s(errMsg, msgLen, "[err]Line ?(Format string): Format string must be specified.\n");
+            strncat(errMsg, msgLen, "[err]Line ?(Format string): Format string must be specified.\n");
             return -1;
         }
 
         /* 检测是否是变量开头 */
         if (FORMAT_IS_VAR(format.formatTable[0]))
         {
-            strcat_s(errMsg, msgLen, "[err]Line ?(Format string): Format string cannot begin with a variable.\n");
+            strncat(errMsg, msgLen, "[err]Line ?(Format string): Format string cannot begin with a variable.\n");
             return -1;
         }
 
@@ -451,7 +451,7 @@ int readTemplateFile(const char *const ipFile, const char *const templateFile,
             {
                 if (FORMAT_IS_VAR(format.formatTable[cnt-1]))
                 {
-                    strcat_s(errMsg, msgLen, 
+                    strncat(errMsg, msgLen, 
                             "[err]Line ?(Format string): The two variables must be separated by string constants.\n");
                     return -1;
                 }
@@ -484,7 +484,7 @@ int readTemplateFile(const char *const ipFile, const char *const templateFile,
              format.formatTable[format.formatTableLen-2] == FORMAT_ANYSTR)
            )
         {
-            strcat_s(errMsg, msgLen, 
+            strncat(errMsg, msgLen, 
                      "[err]Line ?(Format string): Format string cannot ending with variable $text$ or $anystring$.\n");
             isError = TRUE;
         }
@@ -492,47 +492,47 @@ int readTemplateFile(const char *const ipFile, const char *const templateFile,
         /* 检测时间定义次数 */
         if (timeDefineTimes == 0)
         {
-            strcat_s(errMsg, msgLen, 
+            strncat(errMsg, msgLen, 
                      "[err]Line ?(Format string): Variable $time$ must be specified.\n");
             isError = TRUE;
         }
         else if (timeDefineTimes > 1)
         {
-            strcat_s(errMsg, msgLen, 
+            strncat(errMsg, msgLen, 
                      "[err]Line ?(Format string): Variable $time$ is defined repeatedly.\n");
             isError = TRUE;
         }
         /* 检测类型定义次数 */
         if (typeDefineTimes > 1)
         {
-            strcat_s(errMsg, msgLen, 
+            strncat(errMsg, msgLen, 
                      "[err]Line ?(Format string): Variable $type$ is defined repeatedly.\n");
             isError = TRUE;
         }
         /* 检查文字大小定义次数 */
         if (fontsizeDefineTimes > 1)
         {
-            strcat_s(errMsg, msgLen, 
+            strncat(errMsg, msgLen, 
                      "[err]Line ?(Format string): Variable $fontsize$ is defined repeatedly.\n");
             isError = TRUE;
         }
         /* 检查颜色定义次数 */
         if (colorDefineTimes > 1)
         {
-            strcat_s(errMsg, msgLen, 
+            strncat(errMsg, msgLen, 
                      "[err]Line ?(Format string): Variable $color$ is defined repeatedly.\n");
             isError = TRUE;
         }
         /* 检查文本定义次数 */
         if (textDefineTimes == 0)
         {
-            strcat_s(errMsg, msgLen, 
+            strncat(errMsg, msgLen, 
                      "[err]Line ?(Format string): Variable $text$ must be specified.\n");
             isError = TRUE;
         }
         else if (textDefineTimes > 1)
         {
-            strcat_s(errMsg, msgLen, 
+            strncat(errMsg, msgLen, 
                      "[err]Line ?(Format string): Variable $text$ is defined repeatedly.\n");
             isError = TRUE;
         }

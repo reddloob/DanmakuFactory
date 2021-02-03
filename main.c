@@ -86,7 +86,7 @@ int main(int argc, char **argv)
     
     /* 获取配置文件路径 */
     getPath(programPath, argv[0], MAX_TEXT_LENGTH);
-    sprintf_s(configFilePath, MAX_TEXT_LENGTH, "%s%s", programPath, "\\"CONFIG_FILE_NAME);
+    snprintf(configFilePath, MAX_TEXT_LENGTH, "%s%s", programPath, "\\"CONFIG_FILE_NAME);
     configFilePath[MAX_TEXT_LENGTH - 1] = '\0';
     if (strstr(configFilePath, CONFIG_FILE_NAME) == NULL)
     {
@@ -188,7 +188,7 @@ int main(int argc, char **argv)
                     }
                     else
                     {
-                        sprintf_s(infile[infileNum].template, FILENAME_LEN, "%stemplates\\%s.txt", programPath, tempStr);
+                        snprintf(infile[infileNum].template, FILENAME_LEN, "%stemplates\\%s.txt", programPath, tempStr);
                         (infile[infileNum].template)[FILENAME_LEN-1] = '\0';
                     }
 
