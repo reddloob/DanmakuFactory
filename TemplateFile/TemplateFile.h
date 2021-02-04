@@ -42,7 +42,9 @@ extern "C" {
 #include <string.h>
 #include "../Define/DanmakuDef.h"
 #include "../Define/Status.h"
+#include "../List/DanmakuFactoryList.h"
 #include "../String/DanmakuFactoryString.h"
+#include "../safer_str_func_fix.h"
 
 #define LINE_MAX_LEN 4096
 #define FORMAT_TABLE_MAX_LEN 256
