@@ -24,6 +24,8 @@ DanmakuFactory是一款弹幕文件转换工具，支持特殊弹幕，支持多
 
 需要提前安装git, make, gcc
 
+0. 切换到 linux branch
+
 1. clone仓库到本地(注意当前目录下不要有相同名字的文件夹)
 
 ```shell
@@ -45,7 +47,7 @@ mkdir temp
 4. 编译，可执行文件为DanmakuFactory
 
 ```shell
-make
+make -f makefile-64
 ```
 
 
